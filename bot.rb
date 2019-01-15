@@ -4,7 +4,8 @@ require 'weighted_randomizer'
 
 TOKEN = '626334553:AAG_TKzC6iwbgihU2hgQZlZT9VSG0hqxs8M'
 REPLY = 'Ух, сука, со смыслом'
-DECISIONS = { true => 1, false => 20 }
+FALSE_DECISION_FREQUENCY_RATE = 20
+DECISIONS = { true => 1, false => FALSE_DECISION_FREQUENCY_RATE }
 
 bot = TelegramBot.new(token: TOKEN)
 randomizer = WeightedRandomizer.new(DECISIONS)
