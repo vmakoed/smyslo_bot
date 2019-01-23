@@ -6,12 +6,12 @@ require 'date'
 require 'pry'
 
 class SmyslFinder
-  attr_accessor :big_messages_total, :last_message_date
-
   SYMBOLS_THRESHOLD = ENV['SMYSLOBOT_THRESHOLD'].to_i
   FIBONACCI = [3, 5, 8, 13].freeze
   TOKEN = ENV['SMYSLOBOT_TOKEN']
   REPLY = 'Ух, сука, со смыслом'
+
+  attr_accessor :big_messages_total, :last_message_date
 
   def initialize
     @bot = TelegramBot.new(token: TOKEN)
@@ -25,6 +25,8 @@ class SmyslFinder
     end
   end
 
+  private
+
   def reply(message)
     reset_counter if @last_message_date&.<(DateTime.now.new_offset.to_date)
     @last_message_date = message.date.to_date
@@ -33,8 +35,6 @@ class SmyslFinder
 
     message.reply { |reply| so_smyslom(reply) }
   end
-
-  private
 
   def find_smysl
     (@big_messages_total % FIBONACCI.sample).zero?
