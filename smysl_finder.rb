@@ -28,12 +28,12 @@ class SmyslFinder
   private
 
   def reply(message)
+    return if message.text.nil? || message.text.empty?
     reset_counter if @last_message_date&.<(DateTime.now.new_offset.to_date)
     @last_message_date = message.date.to_date
-
     return unless smysl?(message.text)
 
-    message.reply { |reply| so_smyslom(reply) }
+    message.reply { |reply| so_smyslom(reply).send_with(@bot) }
   end
 
   def find_smysl
@@ -48,7 +48,7 @@ class SmyslFinder
   end
 
   def so_smyslom(reply)
-    reply.tap { |reply_object| reply_object.text = REPLY }.send_with(@bot)
+    reply.tap { |new_reply| new_reply.text = REPLY }
   end
 
   def reset_counter
