@@ -10,6 +10,7 @@ class SmyslFinder
   FIBONACCI = [3, 5, 8, 13].freeze
   TOKEN = ENV['SMYSLOBOT_TOKEN']
   REPLY = 'Ух, сука, со смыслом'
+  TRIGGER_WORD = 'smysl'
 
   attr_accessor :big_messages_total, :last_message_date
 
@@ -41,6 +42,7 @@ class SmyslFinder
   end
 
   def smysl?(text)
+    return true if text.include?(TRIGGER_WORD)
     return false if text.size < SYMBOLS_THRESHOLD
 
     @big_messages_total += 1
